@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.7911646586345381" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="blackjack.controller.BlackJackController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <ImageView fx:id="card1" fitHeight="137.0" fitWidth="113.0" layoutX="39.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card2" fitHeight="137.0" fitWidth="113.0" layoutX="188.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card3" fitHeight="137.0" fitWidth="113.0" layoutX="343.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="card4" fitHeight="137.0" fitWidth="113.0" layoutX="486.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" />
+            <TextField fx:id="playerName" layoutX="663.0" layoutY="320.0" prefHeight="15.0" prefWidth="103.0" />
+            <TextField fx:id="playerScore" layoutX="663.0" layoutY="355.0" prefHeight="15.0" prefWidth="103.0" />
+            <TextField fx:id="dealerName" layoutX="663.0" layoutY="15.0" prefHeight="15.0" prefWidth="103.0" />
+            <TextField fx:id="dealerScore" layoutX="663.0" layoutY="54.0" prefHeight="15.0" prefWidth="103.0" />
+            <ImageView fx:id="dCard1" fitHeight="137.0" fitWidth="113.0" layoutX="39.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="dCard2" fitHeight="137.0" fitWidth="113.0" layoutX="188.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="dCard3" fitHeight="137.0" fitWidth="113.0" layoutX="343.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="dCard4" fitHeight="137.0" fitWidth="113.0" layoutX="486.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="241.0" prefWidth="598.0">
+         <children>
+            <Button fx:id="hit" layoutX="663.0" layoutY="48.0" mnemonicParsing="false" onAction="#hitPlayer" prefHeight="27.0" prefWidth="56.0" text="Hit" />
+            <Button fx:id="stay" layoutX="728.0" layoutY="47.0" mnemonicParsing="false" onAction="#hitPlayer" prefHeight="27.0" prefWidth="56.0" text="Stay" />
+            <TextField fx:id="result" layoutX="228.0" layoutY="48.0" />
+            <Label layoutX="52.0" layoutY="12.0" text="Chips Total" textFill="#e1e824">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Button fx:id="deal" layoutX="534.0" layoutY="48.0" mnemonicParsing="false" onAction="#dealCards" prefHeight="27.0" prefWidth="56.0" text="Deal" />
+            <TextField fx:id="totalChips" layoutX="15.0" layoutY="48.0" />
+            <Label layoutX="423.0" layoutY="47.0" prefHeight="27.0" prefWidth="50.0" text="Bet:" textFill="#e1e824">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="bet" layoutX="466.0" layoutY="47.0" prefHeight="27.0" prefWidth="56.0" />
+            <Label layoutX="272.0" layoutY="12.0" text="Outcome:" textFill="#e1e824">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+         </children></AnchorPane>
+  </items>
+</SplitPane>
