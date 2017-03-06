@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Player {
 	
-	private List<Card> hand = new ArrayList<>();
+	private List<Card> hand = new ArrayList<Card>();
 	private String playerName;
 	private int chipAmount;
 	

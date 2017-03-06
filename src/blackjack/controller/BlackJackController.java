@@ -1,12 +1,22 @@
 package blackjack.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.Client;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
 
 import blackjack.model.Card;
 import blackjack.model.Deal;
 import blackjack.model.Deck;
 import blackjack.model.Player;
+import blackjack.model.Round;
+import blackjack.utils.EsConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -310,6 +320,14 @@ public class BlackJackController {
 	}
 
 	private void resetHands() {
+		
+		String resultOfGame = result.getText();
+		
+		Round round = createRound(dealer, player, resultOfGame);
+		String json = jsonString(round);
+		
+		IndexResponse response = sendToElastic(json);
+		
 		Image image = null;
 		player.getHand().removeAll(hand1);
 		dealer.getHand().removeAll(hand2);
@@ -326,8 +344,65 @@ public class BlackJackController {
 			deck.shuffleDeck(cards);
 			
 		}
+		
+	
 		result.clear();
 
+	}
+	
+	private static Round createRound(Player dealer, Player player, String result) {
+		
+		Round round = new Round();
+		round.setDealerName(dealer.getPlayerName());
+		round.setPlayerName(player.getPlayerName());
+		round.setDealerHand(dealer.getHand());
+		round.setPlayerHand(player.getHand());
+		round.setRoundOutcome(result);
+	
+		return round;
+		
+	}
+	
+	private String jsonString(Round round) {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+
+			//Convert object to JSON string
+			String jsonString = mapper.writeValueAsString(round);
+			//System.out.println(jsonInString);
+
+			//Convert object to JSON string and pretty print
+			jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(round);
+			System.out.println(jsonString);
+			
+			return jsonString;
+
+
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	
+		return null;
+	}
+	
+	private IndexResponse sendToElastic(String jsonString) {
+	
+		
+		Client client = EsConnector.connectToClient();
+		
+		IndexResponse response = client.prepareIndex("test", "output").setSource(jsonString)
+				.execute()
+				.actionGet();
+				
+		return response;
+		
 	}
 
 }
