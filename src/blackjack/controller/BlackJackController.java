@@ -60,7 +60,6 @@ public class BlackJackController {
 	private List<Card> hand1 = new ArrayList<Card>();
 	private List<Card> hand2 = new ArrayList<Card>();
 	Deal dealing = new Deal();
-	private static int flag = 0;
 
 	@SuppressWarnings("unchecked")
 	@FXML
@@ -85,15 +84,17 @@ public class BlackJackController {
 
 	public void dealCards(ActionEvent e) {
 		Button b = (Button) e.getSource();
-		// System.out.println("chips " + player.getChipAmount());
 
 		String betAmount = String.valueOf(bet.getText());
 		int amount = Integer.parseInt(betAmount);
 
-		// if(b == )
 
 		if (b == deal) {
-			resetHands();
+			if(hand1.size() > 1 || hand2.size() > 1) {
+				resetHands();
+			}
+			System.out.println(hand1.size());
+			System.out.println(hand2.size());
 			if (amount < player.getChipAmount()) {
 				deck.shuffleDeck(cards);
 				deal.setDisable(true);
@@ -117,6 +118,8 @@ public class BlackJackController {
 				cards.remove(cards.get(0));
 				card1.setImage(hand1.get(0).getImage());
 				card2.setImage(hand1.get(1).getImage());
+				System.out.println(hand1.size());
+				System.out.println(hand2.size());
 
 				int playerTotal = dealing.getPlayerTotal(hand1);
 				int dealerTotal = dealing.getPlayerTotal(hand2);
@@ -141,17 +144,20 @@ public class BlackJackController {
 		dealerTotal = dealing.getPlayerTotal(hand2);
 
 		if (b == hit) {
+			System.out.println(hand1.size());
+			System.out.println(hand2.size());
 			if (dealing.checkForEmptyDeck(cards) == true) {
 				dealing.getNextCard(cards);
 				cards.remove(0);
 			}
+
 			hand1.add(cards.get(0));
 			cards.remove(0);
 			playerTotal = dealing.getPlayerTotal(hand1);
 			playerScore.setText(Integer.toString(playerTotal));
 
-			System.out.println("karl" + player);
-			System.out.println("dealer" + dealer);
+			//System.out.println("karl" + player);
+			//System.out.println("dealer" + dealer);
 
 			if (hand1.size() == 3) {
 				card3.setImage(hand1.get(2).getImage());
@@ -184,60 +190,28 @@ public class BlackJackController {
 				amount = Integer.parseInt(betAmount);
 				temp = totalChips.getText();
 				chips = Integer.parseInt(temp);
-				// System.out.println(chips);
 				chips = chips - amount;
-				/*
-				 * System.out.println("amount " + amount);
-				 * System.out.println("chips " + chips);
-				 */
 				totalChips.setText(Integer.toString(chips));
 				hit.setDisable(true);
 				stay.setDisable(true);
 				deal.setDisable(false);
-
-			} else if (playerTotal == 21 && dealerTotal != 21) {
-				result.setText("Win");
-				betAmount = String.valueOf(bet.getText());
-				amount = Integer.parseInt(betAmount);
-				temp = totalChips.getText();
-				chips = Integer.parseInt(temp);
-				chips = (amount * 2) + chips;
-				/*
-				 * System.out.println(chips); System.out.println("amount w1 " +
-				 * amount); System.out.println("chips " + chips);
-				 */
-				totalChips.setText(Integer.toString(chips));
-				hit.setDisable(true);
-				stay.setDisable(true);
-				deal.setDisable(false);
-
-			} else if ((playerTotal > dealerTotal && hitDealer == false) || (dealerTotal > 21)) {
-				result.setText("Win");
-				betAmount = String.valueOf(bet.getText());
-				amount = Integer.parseInt(betAmount);
-				temp = totalChips.getText();
-				chips = Integer.parseInt(temp);
-				// System.out.println(chips);
-				chips = (amount * 2) + chips;
-				/*
-				 * System.out.println("amount w2 " + amount);
-				 * System.out.println("chips " + chips);
-				 */
-				totalChips.setText(Integer.toString(chips));
-				hit.setDisable(true);
-				stay.setDisable(true);
-				deal.setDisable(false);
-
 			} else if (hitDealer == false && playerTotal == dealerTotal) {
 				result.setText("Draw");
 				betAmount = String.valueOf(bet.getText());
 				amount = Integer.parseInt(betAmount);
 				temp = totalChips.getText();
 				chips = Integer.parseInt(temp);
-				/*
-				 * System.out.println(chips); System.out.println("amount " +
-				 * amount); System.out.println("chips " + chips);
-				 */
+				totalChips.setText(Integer.toString(chips));
+				hit.setDisable(true);
+				stay.setDisable(true);
+				deal.setDisable(false);
+			} else if ((playerTotal == 21 && dealerTotal != 21) || (playerTotal > dealerTotal && hitDealer == false) || (dealerTotal > 21)) {
+				result.setText("Win");
+				betAmount = String.valueOf(bet.getText());
+				amount = Integer.parseInt(betAmount);
+				temp = totalChips.getText();
+				chips = Integer.parseInt(temp);
+				chips = (amount * 2) + chips;
 				totalChips.setText(Integer.toString(chips));
 				hit.setDisable(true);
 				stay.setDisable(true);
@@ -265,19 +239,6 @@ public class BlackJackController {
 
 			} else {
 				stayFlag = 2;
-				result.setText("Win");
-				betAmount = String.valueOf(bet.getText());
-				amount = Integer.parseInt(betAmount);
-				temp = totalChips.getText();
-				chips = Integer.parseInt(temp);
-				System.out.println(chips);
-				chips = (amount * 2) + chips;
-				System.out.println("amount wstay flag 2 " + amount);
-				System.out.println("chips " + chips);
-				totalChips.setText(Integer.toString(chips));
-				hit.setDisable(true);
-				stay.setDisable(true);
-				deal.setDisable(false);
 
 			}
 
@@ -295,29 +256,30 @@ public class BlackJackController {
 				amount = Integer.parseInt(betAmount);
 				temp = totalChips.getText();
 				chips = Integer.parseInt(temp);
-				System.out.println(chips);
 				chips = chips - amount;
-				System.out.println("amount " + amount);
-				System.out.println("chips " + chips);
+				//System.out.println("amountlose " + amount);
+				//System.out.println("chips " + chips);
 				totalChips.setText(Integer.toString(chips));
 				hit.setDisable(true);
 				stay.setDisable(true);
 				deal.setDisable(false);
+				break;
 
-			} else if ((dealerTotal < playerTotal && (dealerTotal > 17 && dealerTotal < 21)) || (dealerTotal > 21)) {
+			} else if ((dealerTotal < playerTotal && (dealerTotal > 17 && dealerTotal < 21)) || (dealerTotal > 21 || 
+					stayFlag == 2)) {
 				result.setText("Win");
 				betAmount = String.valueOf(bet.getText());
 				amount = Integer.parseInt(betAmount);
 				temp = totalChips.getText();
 				chips = Integer.parseInt(temp);
-				System.out.println(chips);
 				chips = (amount * 2) + chips;
-				System.out.println("amount wstay " + amount);
-				System.out.println("chips " + chips);
+				//System.out.println("amount wstay " + amount);
+				//System.out.println("chips " + chips);
 				totalChips.setText(Integer.toString(chips));
 				hit.setDisable(true);
 				stay.setDisable(true);
 				deal.setDisable(false);
+				break;
 
 			} else if (flag == false && playerTotal == dealerTotal) {
 				result.setText("Draw");
@@ -325,13 +287,13 @@ public class BlackJackController {
 				amount = Integer.parseInt(betAmount);
 				temp = totalChips.getText();
 				chips = Integer.parseInt(temp);
-				System.out.println(chips);
-				System.out.println("amount " + amount);
-				System.out.println("chips " + chips);
+				//System.out.println("amount " + amount);
+				//System.out.println("chips " + chips);
 				totalChips.setText(Integer.toString(chips));
 				hit.setDisable(true);
 				stay.setDisable(true);
 				deal.setDisable(false);
+				break;
 
 			}
 
@@ -359,6 +321,11 @@ public class BlackJackController {
 		dCard2.setImage(image);
 		dCard3.setImage(image);
 		dCard4.setImage(image);
+		if(cards.size() == 0) {
+			deck.setDeck();
+			deck.shuffleDeck(cards);
+			
+		}
 		result.clear();
 
 	}

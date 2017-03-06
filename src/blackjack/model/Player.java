@@ -14,10 +14,6 @@ public class Player {
 		playerName = name;
 		hand = hnd;
 	}
-	
-	
-	
-
 
 	public int getChipAmount() {
 		return chipAmount;
@@ -27,20 +23,14 @@ public class Player {
 		this.chipAmount = chipAmount;
 	}
 
-
-
-
-
 	public String getPlayerName() {
 		return playerName;
 	}
 
 
-
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
 	}
-
 
 
 	public List<Card> getHand() {

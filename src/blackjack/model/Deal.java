@@ -6,10 +6,6 @@ import java.util.Scanner;
 
 public class Deal {
 	
-	private Deck deck = new Deck();
-	private List<Card> cards = deck.setDeck();
-	
-
 
 	public List<Card> getNextCard(List<Card> cards) {
 		
@@ -37,9 +33,6 @@ public class Deal {
 			card = "10";
 			
 		}
-		/*else if(card.equals("A")) {
-			card = "1";
-		}*/
 		else if(card.equals("10")){
 			card = card.substring(0, 2);
 		}
@@ -53,40 +46,44 @@ public class Deal {
 	
 	public int getPlayerTotal(List<Card> cards) {
 		String temp, temp2;
-		int tempValue = 0, tempValue2 = 0, total = 0;
+		int tempValue = 0, total = 0;
 		
 		for(int i = 0; i < cards.size(); i++) {
 			if(!cards.get(i).getRank().equals("A")) {
 				temp = convertCard(cards.get(i).getRank());
 				tempValue = Integer.parseInt(temp);
-				System.out.println(tempValue);
+				//System.out.println(tempValue);
 				
 			}
 			
 			if(cards.get(i).getRank().equals("A")) {
-				if(cards.size() == 2) {
+				//if(total <= 10 && cards.size() > 2) {
+				if(cards.size() == 2 || total <= 10) {
 					temp2 = "11";
 					tempValue = Integer.parseInt(temp2);
-					System.out.println(tempValue);
+					//System.out.println(tempValue);
+					
+				}
+				else if(cards.size() == 3 && cards.get(i-1).getRank().equals("A")){
+					temp2 = "1";
+					tempValue = Integer.parseInt(temp2);
+					//System.out.println(tempValue);
 					
 				}
 				else {
 					temp2 = "1";
 					tempValue = Integer.parseInt(temp2);
-					System.out.println(tempValue);
+					//System.out.println(tempValue);
 					
 				}
 				
-				
+				 
 			}
-			
-	
-			//temp = convertCard(cards.get(i).getRank());
-			//tempValue = Integer.parseInt(temp);
+
 			total += tempValue;
 			
+			
 		}
-		//System.out.println(total);
 		return total;
 		
 		
