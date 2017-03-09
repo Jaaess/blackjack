@@ -1,5 +1,7 @@
 # blackjack
 
+Disclaimer: This is a personal project, not meant to be used in production and/or any other professional manner
+
 This is a JavaFX project that also utilizes elasticsearch, kibana, and jackson.
 
 JavaFX Scene starts up when running as a java application.
