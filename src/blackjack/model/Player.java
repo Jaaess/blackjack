@@ -3,6 +3,13 @@ package blackjack.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Player object. Player's attributes are a player's hand (list of cards), player name, and chip amount
+ * Getters and setters for each attribute
+ * Constructor that omits chip amount since impractical to give dealer chips when instantiating
+ * player object as a dealer
+ */
+
 public class Player {
 	
 	private List<Card> hand = new ArrayList<Card>();

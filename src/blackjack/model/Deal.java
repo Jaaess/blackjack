@@ -4,8 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+/*
+ * Class with helper methods when cards are dealt. Could probably name class something better.
+ */
+
 public class Deal {
 	
+	
+	/*
+	 * Method to get next card;
+	 */
 
 	public List<Card> getNextCard(List<Card> cards) {
 		
@@ -17,6 +26,10 @@ public class Deal {
 		
 	}
 	
+	/*
+	 * Method to check for empty deck. returns true if deck is empty
+	 */
+	
 	public boolean checkForEmptyDeck(List<Card> cards) {
 		if(cards.size() != 0) {
 			return true;
@@ -27,6 +40,10 @@ public class Deal {
 		
 	}
 
+	
+	/*
+	 * Method to convert card that isn't 2-10 to a numeric value (J, Q, K, A)s
+	 */
 	
 	public String convertCard(String card) {
 		if(card.equals("J") || card.equals("Q") ||  card.equals("K")) {
@@ -43,6 +60,10 @@ public class Deal {
 		return card;
 		
 	}
+	
+	/*
+	 * Method to get player total
+	 */
 	
 	public int getPlayerTotal(List<Card> cards) {
 		String temp, temp2;

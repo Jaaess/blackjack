@@ -26,6 +26,9 @@ import javafx.scene.image.ImageView;
 
 public class BlackJackController {
 
+	/*
+	 * All of the FXML buttons, FXML ImageViews, and FXML TextFields used in the view
+	 */
 	@FXML
 	Button hit;
 	@FXML
@@ -71,6 +74,10 @@ public class BlackJackController {
 	private List<Card> hand2 = new ArrayList<Card>();
 	Deal dealing = new Deal();
 
+	
+	/*
+	 * Method to initialize the game board after it loads. Will set player name and give player $500 chips
+	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	private void initialize() {
@@ -91,21 +98,45 @@ public class BlackJackController {
 		result.setEditable(false);
 
 	}
+	
+	/*
+	 * Method to deal cards to dealer and player
+	 * Uses ActionEvent object to trigger boolean expressions based on which button id user clicks
+	 * If user clicks deal ---> reset hand if user's hand is > 0,
+	 *  deal 2 cards each for dealer and player, 
+	 *  set images for those cards,
+	 *  and set player total after dealing first hand
+	 * 
+	 */
 
 	public void dealCards(ActionEvent e) {
 		Button b = (Button) e.getSource();
 
 		String betAmount = String.valueOf(bet.getText());
 		int amount = Integer.parseInt(betAmount);
-
+		
+		if(cards.size() == 0) {
+			System.out.println("out of cards");
+			deck.setDeck();
+			deck.shuffleDeck(cards);
+			
+		}
+		
 
 		if (b == deal) {
-			if(hand1.size() > 1 || hand2.size() > 1) {
+			if(hand1.size() > 0 || hand2.size() > 0) {
 				resetHands();
 			}
-			System.out.println(hand1.size());
-			System.out.println(hand2.size());
+			//System.out.println(hand1.size());
+			//System.out.println(hand2.size());
 			if (amount < player.getChipAmount()) {
+				
+				if(cards.size() == 0) {
+					System.out.println("out of cards");
+					deck.setDeck();
+					deck.shuffleDeck(cards);	
+				}
+				
 				deck.shuffleDeck(cards);
 				deal.setDisable(true);
 				hit.setDisable(false);
@@ -114,22 +145,31 @@ public class BlackJackController {
 				// dealer = new Player(hand2, "dealer");
 
 				dealer.getHand();
-				hand2.add(cards.get(0));
-				cards.remove(cards.get(0));
-				hand2.add(cards.get(0));
-				cards.remove(cards.get(0));
-				dCard1.setImage(hand2.get(0).getImage());
-				dCard2.setImage(hand2.get(1).getImage());
+				
+				
+				if(cards.size() != 0 && cards.size() != 1) {
+					hand2.add(cards.get(0));
+					cards.remove(cards.get(0));
+					dCard1.setImage(hand2.get(0).getImage());
+					hand2.add(cards.get(1));
+					cards.remove(cards.get(1));
+					dCard2.setImage(hand2.get(1).getImage());
+				}
+
 
 				player.getHand();
-				hand1.add(cards.get(0));
-				cards.remove(cards.get(0));
-				hand1.add(cards.get(0));
-				cards.remove(cards.get(0));
-				card1.setImage(hand1.get(0).getImage());
-				card2.setImage(hand1.get(1).getImage());
-				System.out.println(hand1.size());
-				System.out.println(hand2.size());
+				if(cards.size() != 0 && cards.size() != 1) {
+					hand1.add(cards.get(0));
+					cards.remove(cards.get(0));
+					card1.setImage(hand1.get(0).getImage());
+	
+					hand1.add(cards.get(0));
+					cards.remove(cards.get(0));
+					card2.setImage(hand1.get(1).getImage());
+				}
+				
+				//System.out.println(hand1.size());
+				//System.out.println(hand2.size());
 
 				int playerTotal = dealing.getPlayerTotal(hand1);
 				int dealerTotal = dealing.getPlayerTotal(hand2);
@@ -141,6 +181,24 @@ public class BlackJackController {
 		}
 
 	}
+	
+	
+	/*
+	 * Method to hit player and dealer
+	 * Uses ActionEvent object to trigger boolean expressions based on which button id user clicks
+	 * If user clicks hit ---> deals card for player, 
+	 * 	deals card for dealer depending on dealer's hand 
+	 *  set images for cards dealt
+	 *  and set player total after hitting
+	 *  finally, checks user score after each hit if user can call hit again. 
+	 *  if user loses, then ends round
+	 *  
+	 *  If user clicks stay ---> stops player from hitting or staying again
+	 *   if dealer needs to hit, dealer will hit
+	 *   finally, checks user score after dealer is done hitting if dealer needs to hit 
+	 *   if user wins/loses, then ends round
+	 * 
+	 */
 
 	public void hitPlayer(ActionEvent e) {
 		Button b = (Button) e.getSource();
@@ -154,11 +212,17 @@ public class BlackJackController {
 		dealerTotal = dealing.getPlayerTotal(hand2);
 
 		if (b == hit) {
-			System.out.println(hand1.size());
-			System.out.println(hand2.size());
+			//System.out.println(hand1.size());
+			//System.out.println(hand2.size());
 			if (dealing.checkForEmptyDeck(cards) == true) {
 				dealing.getNextCard(cards);
-				cards.remove(0);
+			}
+			
+			if(cards.size() == 0) {
+				System.out.println("out of cards");
+				deck.setDeck();
+				deck.shuffleDeck(cards);
+				
 			}
 
 			hand1.add(cards.get(0));
@@ -310,23 +374,34 @@ public class BlackJackController {
 		}
 
 	}
+	
+	/*
+	 * Boolean method to check if should hit dealer or not
+	 * 
+	 */
 
 	private boolean hitDealer(int playerTotal, int dealerTotal) {
-		if (dealerTotal < 17 && playerTotal <= 21) {
+		if (dealerTotal < 17 && playerTotal <= 21 && hit.isDisabled() == true) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
+
+	/*
+	 * Method to reset the hand, removes all cards from both dealer and player hands, and resets images
+	 * 
+	 */
 
 	private void resetHands() {
 		
 		String resultOfGame = result.getText();
 		
-		Round round = createRound(dealer, player, resultOfGame);
-		String json = jsonString(round);
+		//Round round = createRound(dealer, player, resultOfGame);
+		//String json = jsonString(round);
 		
-		IndexResponse response = sendToElastic(json);
+		//IndexResponse response = sendToElastic(json);
 		
 		Image image = null;
 		player.getHand().removeAll(hand1);
@@ -349,6 +424,10 @@ public class BlackJackController {
 		result.clear();
 
 	}
+	/*
+	 * Method to create round object which is all data from round 
+	 * (player and dealer names, player and dealer cards, and roud outcome
+	 */
 	
 	private static Round createRound(Player dealer, Player player, String result) {
 		
@@ -363,6 +442,10 @@ public class BlackJackController {
 		
 	}
 	
+	/*
+	 * Method to convert a round object to a JSON string
+	 */
+	
 	private String jsonString(Round round) {
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -375,7 +458,7 @@ public class BlackJackController {
 
 			//Convert object to JSON string and pretty print
 			jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(round);
-			System.out.println(jsonString);
+			//System.out.println(jsonString);
 			
 			return jsonString;
 
@@ -391,6 +474,11 @@ public class BlackJackController {
 	
 		return null;
 	}
+	
+	/*
+	 * Method to send round object to elastic, called every time round ends in resetHands() method
+	 * 
+	 */
 	
 	private IndexResponse sendToElastic(String jsonString) {
 	

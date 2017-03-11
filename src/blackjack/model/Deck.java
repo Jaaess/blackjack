@@ -5,6 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/*
+ * Deck object. Deck full of card objects, card objects set here and placed in deck
+ * 
+ */
+
 import javafx.scene.image.Image;
 
 public class Deck {
@@ -23,6 +28,10 @@ public class Deck {
 	public List<Card> getDeck() {
 		return deck;
 	}
+	
+	/*
+	 * Method to get all diamond card images
+	 */
 
 	private List<Image> getImageListD() {
 
@@ -37,6 +46,10 @@ public class Deck {
 
 		return imageList;
 	}
+	
+	/*
+	 * Method to get all heart card images
+	 */
 
 	private List<Image> getImageListH() {
 
@@ -52,6 +65,10 @@ public class Deck {
 		return imageList2;
 	}
 	
+	/*
+	 * Method to get all clubs card images
+	 */
+
 	private List<Image> getImageListC() {
 
 		String temp;
@@ -66,6 +83,11 @@ public class Deck {
 		return imageList3;
 	}
 	
+	/*
+	 * Method to get all spade card images
+	 */
+
+	
 	private List<Image> getImageListS() {
 
 		String temp;
@@ -79,7 +101,11 @@ public class Deck {
 
 		return imageList4;
 	}
-
+	
+	
+	/*
+	 * Method to set a deck
+	 */
 
 	public List<Card> setDeck() {
 		getImageListD();
@@ -121,10 +147,18 @@ public class Deck {
 
 		return deck;
 	}
+	
+	/*
+	 * Metho to shuffle the deck
+	 */
 
 	public void shuffleDeck(List<Card> cards) {
 		Collections.shuffle(cards);
 	}
+	
+	/*
+	 * Method that returns list of paths of all card images
+	 */
 
 	private List<String> getPaths() {
 

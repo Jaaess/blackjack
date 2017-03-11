@@ -2,6 +2,11 @@ package blackjack.model;
 
 import javafx.scene.image.Image;
 
+/*
+ * Card object. Attributes include rank, suit, color, and image
+ * Setters and getters for each attribute and a constructor
+ */
+
 public class Card {
 	private String rank;
 	private String suit;

@@ -7,6 +7,12 @@ import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
 
 public class BlackJackApp extends Application {
+	
+	/*
+	 * Method to instantiate a Stage object and load the scene from the fxml file
+	 * Also load style.css file which is the background image
+	 * 
+	 */
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
