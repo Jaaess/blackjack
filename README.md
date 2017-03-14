@@ -6,6 +6,7 @@ This is a JavaFX project that also utilizes elasticsearch, kibana, and jackson. 
 
 Player starts with $500 dollars worth of chips. Player can place a bet against the dealer as long as the bet is < the pot of chips. Blackjack regular rules apply. Splitting and insurance do not however. Also, the dealer's cards are visible from the first round. The round is saved to elasticsearch at the end of the round and can perform data analysis on kibana on wins/losses
 
+<img width="801" alt="screen shot 2017-03-13 at 10 10 20 pm" src="https://cloud.githubusercontent.com/assets/26029285/23882981/8ce3e02e-083a-11e7-8028-e7cea60ebfcd.png">
 
 
 
