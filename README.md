@@ -9,4 +9,12 @@ Player starts with $500 dollars worth of chips. Player can place a bet against t
 <img width="801" alt="screen shot 2017-03-13 at 10 10 20 pm" src="https://cloud.githubusercontent.com/assets/26029285/23882981/8ce3e02e-083a-11e7-8028-e7cea60ebfcd.png">
 
 
+#Example of using Kibana chart:
+
+In this example you can see that 21% of the cards I was dealt when I won were aces, also that I only won 47 % of the time :(
+
+
+<img width="884" alt="screen shot 2017-03-13 at 10 19 13 pm" src="https://cloud.githubusercontent.com/assets/26029285/23883093/3a6b86ca-083b-11e7-8ebc-54306745534b.png">
+
+
 
